@@ -31,14 +31,5 @@ func StartServer() {
 		article.GET("manage/", controllers.EnsureLoggedIn(), controllers.ManageArticles)
 	}
 
-	v1 := router.Group("/api/v1/")
-	{
-		v1.POST("product/", controllers.CreateProduct)
-		v1.GET("product/", controllers.FetchAllProduct)
-		v1.GET("product/:id", controllers.FetchSingleProduct)
-		v1.PUT("product/:id", controllers.UpdateProduct)
-		v1.DELETE("product/:id", controllers.DeleteProduct)
-	}
-
 	router.Run("localhost:8080")
 }

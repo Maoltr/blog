@@ -9,19 +9,18 @@ import (
 
 var mySigningKey = []byte("secret")
 
-func GenerateToken(username string) string {
+func GenerateToken(username string, lifeTime time.Duration) string {
 	var token jwt.Token
 
 	claims := jwt.MapClaims{
 		"username": username,
-		"exp":      time.Now().Add(time.Minute * 20).Unix(),
+		"exp":      time.Now().Add(lifeTime).Unix(),
 	}
 
 	token = *jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 
 	tokenString, _ := token.SignedString(mySigningKey)
-	fmt.Println("Token: ", tokenString)
-	fmt.Println(token)
+
 	return tokenString
 }
 
@@ -35,7 +34,7 @@ func ValidateToken(token string) error {
 			return nil
 		}
 	}
-	fmt.Println(err.Error())
+
 	return errors.New("Not valid token")
 }
 

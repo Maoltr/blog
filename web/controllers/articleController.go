@@ -72,17 +72,17 @@ func ManageArticles(c *gin.Context) {
 
 	if len(articles) <= 0 {
 		c.HTML(http.StatusNotFound, "error.html", gin.H{
-			"title": "Error",
-			"text": "You haven't articles, create them:)",
+			"title":        "Error",
+			"text":         "You haven't articles, create them:)",
 			"is_logged_in": loggedInInterface.(bool),
 		})
 		return
 	}
 
 	bundlers.Render(c, gin.H{
-		"title": "My Articles",
+		"title":   "My Articles",
 		"payload": articles,
-	},"manageArticles.html")
+	}, "manageArticles.html")
 }
 
 func notAuthorized(c *gin.Context) {
@@ -94,7 +94,7 @@ func notAuthorized(c *gin.Context) {
 	})
 }
 
-func getUsername(c *gin.Context) string{
+func getUsername(c *gin.Context) string {
 	token, err := c.Cookie("token")
 
 	if err != nil {

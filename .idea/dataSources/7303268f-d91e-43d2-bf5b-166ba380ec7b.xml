@@ -1002,23 +1002,14 @@
       <DataType>varchar(255)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <index id="249" parent="233" name="users_username_uindex">
-      <ColNames>username</ColNames>
-      <Unique>1</Unique>
-      <Type>btree</Type>
-    </index>
-    <index id="250" parent="233" name="idx_users_deleted_at">
+    <index id="249" parent="233" name="idx_users_deleted_at">
       <ColNames>deleted_at</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="251" parent="233" name="PRIMARY">
+    <key id="250" parent="233" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
-    </key>
-    <key id="252" parent="233" name="users_username_uindex">
-      <ColNames>username</ColNames>
-      <UnderlyingIndexName>users_username_uindex</UnderlyingIndexName>
     </key>
   </database-model>
 </dataSource>

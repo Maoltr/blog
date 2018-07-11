@@ -6,16 +6,6 @@ import (
 	_ "github.com/jinzhu/gorm/dialects/mysql"
 )
 
-func Database() *gorm.DB {
-	db, err := gorm.Open("mysql", "root:w3edr509bc@/Product?parseTime=true")
-
-	if err != nil {
-		panic("Failed to connect database: %s" + err.Error())
-	}
-
-	return db
-}
-
 func ArticleDatabase() *gorm.DB {
 	db, err := gorm.Open("mysql", "root:w3edr509bc@/Article?parseTime=true")
 	db.AutoMigrate(&model.Article{})
