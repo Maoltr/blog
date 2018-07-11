@@ -3,7 +3,6 @@ package database
 import (
 	"blog/model"
 	"errors"
-	"fmt"
 )
 
 func SaveArticle(title, content, username string) {
@@ -42,12 +41,12 @@ func DeleteArticle(id, username string) error {
 
 	db := ArticleDatabase()
 	defer Close(db)
-	fmt.Println("Try to find post: ", id)
+
 	db.First(&article, id)
 	if article.Username != username {
 		return errors.New("It's not your post")
 	}
-	fmt.Println("Deleting")
+
 	db.Delete(&article)
 
 	var res model.Article

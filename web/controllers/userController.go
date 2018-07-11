@@ -32,14 +32,15 @@ func Login(c *gin.Context) {
 		return
 	}
 
-	c.HTML(http.StatusBadRequest, "login.html", gin.H{
-		"ErrorTitle":   "Login Failed",
-		"ErrorMessage": err.Error(),
-	})
+	bundlers.RenderErr(c, gin.H{
+		"title":   "Login Failed",
+		"text": err.Error(),
+	}, http.StatusBadRequest)
 }
 
 func LogOut(c *gin.Context) {
 	c.SetCookie("token", "", -1, "", "", false, true)
+	c.Set("is_logged_in", false)
 	GetAllArticles(c)
 }
 
@@ -65,11 +66,8 @@ func Register(c *gin.Context) {
 		return
 	}
 
-	loggedInInterface, _ := c.Get("is_logged_in")
-
-	c.HTML(http.StatusBadRequest, "login.html", gin.H{
-		"ErrorTitle":   "Registration Failed",
-		"ErrorMessage": err.Error(),
-		"is_logged_in": loggedInInterface.(bool),
-	})
+	bundlers.RenderErr(c, gin.H{
+		"title":  "Registration Failed",
+		"text": err.Error(),
+	}, http.StatusBadRequest)
 }

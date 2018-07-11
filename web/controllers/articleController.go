@@ -2,7 +2,6 @@ package controllers
 
 import (
 	"blog/config"
-	"blog/model"
 	"blog/services"
 	"blog/web/bundlers"
 	"github.com/gin-gonic/gin"
@@ -16,6 +15,7 @@ func GetAllArticles(c *gin.Context) {
 		"title":   "Home Page",
 		"payload": data,
 	}, "index.html")
+
 }
 
 func PostArticle(c *gin.Context) {
@@ -43,13 +43,11 @@ func GetArticle(c *gin.Context) {
 		return
 	}
 
-	loggedInInterface, _ := c.Get("is_logged_in")
-
-	c.HTML(http.StatusNotFound, "article.html", gin.H{
+	bundlers.RenderErr(c, gin.H{
 		"title":        "Article",
-		"payload":      model.NewArticle("Not found", "", ""),
-		"is_logged_in": loggedInInterface.(bool),
-	})
+		"text":         "Not found",
+	}, http.StatusNotFound)
+
 }
 
 func DeleteArticle(c *gin.Context) {
@@ -61,21 +59,25 @@ func DeleteArticle(c *gin.Context) {
 
 	if er == nil {
 		GetAllArticles(c)
+		return
 	}
+
+	bundlers.RenderErr(c, gin.H{
+		"title":        "Deleting",
+		"text":         "Can't delete article, try again later",
+	}, http.StatusBadRequest)
 }
 
 func ManageArticles(c *gin.Context) {
 	username := getUsername(c)
-	loggedInInterface, _ := c.Get("is_logged_in")
 
 	articles := services.GetUserArticles(username)
 
 	if len(articles) <= 0 {
-		c.HTML(http.StatusNotFound, "error.html", gin.H{
-			"title":        "Error",
+		bundlers.RenderErr(c, gin.H{
+			"title":        "You haven't articles",
 			"text":         "You haven't articles, create them:)",
-			"is_logged_in": loggedInInterface.(bool),
-		})
+		}, http.StatusNotFound)
 		return
 	}
 
@@ -86,12 +88,10 @@ func ManageArticles(c *gin.Context) {
 }
 
 func notAuthorized(c *gin.Context) {
-	loggedInInterface, _ := c.Get("is_logged_in")
-
-	c.HTML(http.StatusUnauthorized, "home.html", gin.H{
+	bundlers.RenderErr(c, gin.H{
 		"title":        "Not authorized",
-		"is_logged_in": loggedInInterface.(bool),
-	})
+		"text":         "You don't authorized",
+	}, http.StatusUnauthorized)
 }
 
 func getUsername(c *gin.Context) string {

@@ -1,40 +1,51 @@
 package controllers
 
 import (
-	"blog/config"
 	"github.com/gin-gonic/gin"
 	"net/http"
+	"blog/config"
 )
 
 func SetUserStatus() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		if token, err := c.Cookie("token"); err == nil && config.ValidateToken(token) == nil {
-			c.Set("is_logged_in", true)
-		} else {
-			c.Set("is_logged_in", false)
-		}
+		userStatus(c)
+	}
+}
+
+func userStatus(c *gin.Context) {
+	if token, err := c.Cookie("token"); err == nil && config.ValidateToken(token) == nil {
+		c.Set("is_logged_in", true)
+	} else {
+		c.Set("is_logged_in", false)
 	}
 }
 
 func EnsureLoggedIn() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		loggedInInterface, _ := c.Get("is_logged_in")
-		loggedIn := loggedInInterface.(bool)
-
-		if !loggedIn {
-			//if token, err := c.Cookie("token"); err != nil || token == "" {
-			c.AbortWithStatus(http.StatusUnauthorized)
-		}
+		loggedIn(c)
 	}
 }
 
 func EnsureNotLoggedIn() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		loggedInInterface, _ := c.Get("is_logged_in")
-		loggedIn := loggedInInterface.(bool)
+		noLoggedIn(c)
+	}
+}
 
-		if loggedIn {
-			c.AbortWithStatus(http.StatusUnauthorized)
-		}
+func loggedIn(c *gin.Context) {
+	loggedInInterface, _ := c.Get("is_logged_in")
+	loggedIn := loggedInInterface.(bool)
+
+	if !loggedIn {
+		c.AbortWithStatus(http.StatusUnauthorized)
+	}
+}
+
+func noLoggedIn(c *gin.Context) {
+	loggedInInterface, _ := c.Get("is_logged_in")
+	loggedIn := loggedInInterface.(bool)
+
+	if loggedIn {
+		c.AbortWithStatus(http.StatusUnauthorized)
 	}
 }
