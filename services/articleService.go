@@ -44,3 +44,8 @@ func GetUserArticles(username string) []model.TransformedArticle {
 
 	return res
 }
+
+func UpdateArticle(id, title, content, username string) string {
+	err := database.UpdateArticle(id, title, content, username)
+	return err
+}

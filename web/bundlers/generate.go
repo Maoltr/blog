@@ -27,10 +27,10 @@ func RenderErr(c *gin.Context, data gin.H, status int) {
 	data["is_logged_in"] = loggedInInterface.(bool)
 
 	switch c.Request.Header.Get("Accept") {
-	case "json":
+	case "application/json":
 		// Respond with JSON
 		c.JSON(status, data["payload"])
-	case "xml":
+	case "application/xml":
 		// Respond with XML
 		c.XML(status, data["payload"])
 	default:

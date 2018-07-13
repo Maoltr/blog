@@ -67,6 +67,20 @@ func TestLogin(t *testing.T) {
 	if w.Code != http.StatusOK {
 		t.Error("Status: ", w.Code, " Body: ", w.Body)
 	}
+
+	w = httptest.NewRecorder()
+	c, _ = gin.CreateTestContext(w)
+	prepareContextForLogin(c)
+
+	c.Request.Header.Set("Accept", "application/json")
+	c.Request.PostForm.Set("username", "somenonexistname,ihope")
+	c.Request.PostForm.Set("password", "1")
+
+	Login(c)
+
+	if w.Code != http.StatusBadRequest {
+		t.Error("Status: ", w.Code, " Body: ", w.Body)
+	}
 }
 
 func TestRegister(t *testing.T) {
@@ -77,6 +91,20 @@ func TestRegister(t *testing.T) {
 	Register(c)
 
 	if w.Code != http.StatusOK {
+		t.Error("Status: ", w.Code, " Body: ", w.Body)
+	}
+
+	w = httptest.NewRecorder()
+	c, _ = gin.CreateTestContext(w)
+	prepareContextForRegister(c)
+
+	c.Request.Header.Set("Accept", "application/json")
+	c.Request.PostForm.Set("username", username)
+	c.Request.PostForm.Set("password", "1")
+
+	Register(c)
+
+	if w.Code != http.StatusBadRequest {
 		t.Error("Status: ", w.Code, " Body: ", w.Body)
 	}
 

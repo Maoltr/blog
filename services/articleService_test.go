@@ -38,5 +38,14 @@ func TestServiceArticle(t *testing.T) {
 		t.Error("Problems with GetAllArticles")
 	}
 
+	title = "Some new title"
+	content = "some new content"
+
+	err := UpdateArticle(id, title, content, username)
+
+	if err != "" {
+		t.Error(err)
+	}
+
 	DeleteArticle(id, username)
 }

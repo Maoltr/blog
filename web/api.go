@@ -29,6 +29,8 @@ func StartServer() {
 		article.GET("view/:id", controllers.GetArticle)
 		article.POST("delete/:id", controllers.EnsureLoggedIn(), controllers.DeleteArticle)
 		article.GET("manage/", controllers.EnsureLoggedIn(), controllers.ManageArticles)
+		article.GET("update/:id", controllers.EnsureLoggedIn(), controllers.GetUpdateArticle)
+		article.POST("update/:id", controllers.EnsureLoggedIn(), controllers.PostUpdateArticle)
 	}
 
 	router.Run("localhost:8080")

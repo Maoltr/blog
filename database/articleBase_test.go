@@ -50,6 +50,14 @@ func TestArticleBase(t *testing.T) {
 		t.Error("You can't delete not your article")
 	}
 
+	title = "Some new title"
+	content = "Some new content"
+
+	str := UpdateArticle(id, title, content, username)
+
+	if str != "" {
+		t.Error(err.Error())
+	}
 	//Clear our base
 	DeleteArticle(id, username)
 }

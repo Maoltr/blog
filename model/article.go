@@ -1,9 +1,13 @@
 package model
 
-import "github.com/jinzhu/gorm"
+import (
+	"time"
+)
 
 type Article struct {
-	gorm.Model
+	ID        uint `gorm:"primary_key"`
+	CreatedAt time.Time
+	UpdatedAt time.Time
 	Title    string `json:"title"`
 	Content  string `json:"content"`
 	Username string `json:"username"`

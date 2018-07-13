@@ -87,6 +87,47 @@ func ManageArticles(c *gin.Context) {
 	}, "manageArticles.html")
 }
 
+func GetUpdateArticle(c *gin.Context) {
+	id := c.Param("id")
+
+	article := services.GetArticle(id)
+
+	if article.Id == 0 {
+		bundlers.RenderErr(c, gin.H{
+			"title": "Not found article",
+			"text": "Can't found this article",
+		}, http.StatusNotFound)
+		return
+	}
+
+	bundlers.Render(c, gin.H{
+		"title": "Article",
+		"payload": article,
+	}, "update-article.html")
+}
+
+func PostUpdateArticle(c *gin.Context) {
+	id := c.Param("id")
+
+	title := c.PostForm("title")
+	content := c.PostForm("content")
+	username := getUsername(c)
+
+	err := services.UpdateArticle(id, title, content, username)
+
+	if err == "" {
+		GetAllArticles(c)
+		return
+	}
+	bundlers.RenderErr(c, gin.H{
+		"title": "Can't update article",
+		"text": err,
+	}, http.StatusBadRequest)
+
+	return
+
+}
+
 func notAuthorized(c *gin.Context) {
 	bundlers.RenderErr(c, gin.H{
 		"title":        "Not authorized",

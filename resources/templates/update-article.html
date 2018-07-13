@@ -1,0 +1,21 @@
+{{ template "header.html" .}}
+
+
+    <h1>Update Article</h1>
+    <div class="panel-body">
+        <form action="/article/update/{{.payload.Id}}" method="post">
+            <div class="form-group">
+                <label for="title">Title</label>
+                <input type="text" class="form-control" value="{{.payload.Title}}" id="title" name="title">
+            </div>
+            <div class="form-group">
+                <label for="content">Content</label>
+                <textarea class="form-control" rows="10" name="content" id="content">{{.payload.Content}}</textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Update</button>
+        </form>
+    </div>
+
+
+
+{{ template "footer.html" .}}

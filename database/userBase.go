@@ -45,7 +45,7 @@ func DeleteUser(username string) bool {
 
 	db := ArticleDatabase()
 	defer Close(db)
-	db.First(&user, "username = ?", username)
+	db.Find(&user, "username = ?", username)
 
 	if user.ID != 0 {
 		db.Delete(&user)
@@ -60,7 +60,7 @@ func UpdateUser(id, username, password string) *model.User {
 
 	db := ArticleDatabase()
 	defer Close(db)
-	db.First(&user, id)
+	db.Find(&user, id)
 
 	if user.ID != 0 {
 		db.Model(&user).Update("username", username)
