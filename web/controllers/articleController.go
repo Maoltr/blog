@@ -6,7 +6,6 @@ import (
 	"blog/web/bundlers"
 	"github.com/gin-gonic/gin"
 	"net/http"
-	"strings"
 )
 
 func GetAllArticles(c *gin.Context) {
@@ -37,15 +36,10 @@ func GetArticle(c *gin.Context) {
 	article := services.GetArticle(c.Param("id"))
 
 	if article.Id != 0 {
-		article.Content = strings.Replace(article.Content, "\n", "<br>", -1)
-
-		c.Request.Header.Set("Accept", "article")
 		bundlers.Render(c, gin.H{
 			"title":   "Article",
 			"payload": article,
 		}, "article.html")
-
-		c.Request.Header.Set("Accept", "")
 
 		return
 	}
