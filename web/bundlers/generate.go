@@ -2,8 +2,8 @@ package bundlers
 
 import (
 	"github.com/gin-gonic/gin"
-	"net/http"
 	"html/template"
+	"net/http"
 )
 
 func Render(c *gin.Context, data gin.H, templateName string) {
@@ -24,18 +24,14 @@ func Render(c *gin.Context, data gin.H, templateName string) {
 
 		if !checkErr(err) {
 			RenderErr(c, gin.H{
-				"title":        "Article",
-				"text":         err.Error(),
+				"title": "Article",
+				"text":  err.Error(),
 			}, http.StatusBadRequest)
 		}
 	default:
 		// Respond with HTML
 		c.HTML(http.StatusOK, templateName, data)
 	}
-}
-
-func RenderArticle()  {
-
 }
 
 func RenderErr(c *gin.Context, data gin.H, status int) {

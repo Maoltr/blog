@@ -1,21 +1,21 @@
 package controllers
 
 import (
-	"testing"
+	"fmt"
+	"github.com/gin-gonic/gin"
+	"github.com/maoltr/blog/config"
+	"github.com/maoltr/blog/services"
 	"net/http"
 	"net/http/httptest"
-	"github.com/gin-gonic/gin"
-	"blog/services"
-	"fmt"
 	"net/url"
-	"blog/config"
+	"testing"
 	"time"
 )
 
 var (
 	username = "userdfgdfg"
-	title = "title"
-	content = "content"
+	title    = "title"
+	content  = "content"
 )
 
 func TestGetAllArticles(t *testing.T) {
@@ -42,7 +42,7 @@ func TestGetArticle(t *testing.T) {
 	c.Request, _ = http.NewRequest("GET", "/article/view", nil)
 	params := make([]gin.Param, 10)
 	c.Params = params
-	c.Params[0] = gin.Param{Key:"id", Value:id}
+	c.Params[0] = gin.Param{Key: "id", Value: id}
 	c.Set("is_logged_in", true)
 	c.Request.Header.Set("Accept", "application/json")
 
@@ -58,7 +58,7 @@ func TestGetArticle(t *testing.T) {
 	w = httptest.NewRecorder()
 	c, _ = gin.CreateTestContext(w)
 
-	c.Request, _ = http.NewRequest("GET", "/article/view/" + id, nil)
+	c.Request, _ = http.NewRequest("GET", "/article/view/"+id, nil)
 
 	c.Set("is_logged_in", true)
 	c.Request.Header.Set("Accept", "application/json")
@@ -107,7 +107,7 @@ func TestPostAndDeleteArticle(t *testing.T) {
 	prepareContext(c)
 	params := make([]gin.Param, 10)
 	c.Params = params
-	c.Params[0] = gin.Param{Key:"id", Value:id}
+	c.Params[0] = gin.Param{Key: "id", Value: id}
 
 	DeleteArticle(c)
 
@@ -178,9 +178,9 @@ func TestGetUpdateArticle(t *testing.T) {
 	c.Set("is_logged_in", true)
 	params := make([]gin.Param, 10)
 	c.Params = params
-	c.Params[0] = gin.Param{Key:"id", Value:id}
+	c.Params[0] = gin.Param{Key: "id", Value: id}
 	c.Request.Header.Set("Accept", "application/json")
-	token := config.GenerateToken(username, time.Duration(time.Second * 3))
+	token := config.GenerateToken(username, time.Duration(time.Second*3))
 	c.Request.Header.Set("Cookie", "token="+token)
 
 	GetUpdateArticle(c)
@@ -202,8 +202,8 @@ func TestPostUpdateArticle(t *testing.T) {
 	//Prepare our context
 	c.Request, _ = http.NewRequest("POST", "/article/update/", nil)
 	prepareContextForUpdate(c)
-	c.Params[0] = gin.Param{Key:"id", Value:id}
-	token := config.GenerateToken(username, time.Duration(time.Second * 3))
+	c.Params[0] = gin.Param{Key: "id", Value: id}
+	token := config.GenerateToken(username, time.Duration(time.Second*3))
 	c.Request.Header.Set("Cookie", "token="+token)
 
 	PostUpdateArticle(c)
@@ -215,7 +215,7 @@ func TestPostUpdateArticle(t *testing.T) {
 	c, _ = gin.CreateTestContext(w)
 	c.Request, _ = http.NewRequest("POST", "/article/update/", nil)
 	prepareContextForUpdate(c)
-	token = config.GenerateToken("1234567", time.Duration(time.Second * 3))
+	token = config.GenerateToken("1234567", time.Duration(time.Second*3))
 	c.Request.Header.Set("Cookie", "token="+token)
 
 	PostUpdateArticle(c)
@@ -225,7 +225,7 @@ func TestPostUpdateArticle(t *testing.T) {
 	}
 }
 
-func createArticle() string{
+func createArticle() string {
 	services.SaveArticle(title, content, username)
 
 	article := services.GetUserArticles(username)[0]
@@ -238,7 +238,7 @@ func prepareContextForManage(c *gin.Context) {
 	c.Request, _ = http.NewRequest("GET", "/article/manage/", nil)
 	c.Set("is_logged_in", true)
 	c.Request.Header.Set("Accept", "application/json")
-	token := config.GenerateToken(username, time.Duration(time.Second * 5))
+	token := config.GenerateToken(username, time.Duration(time.Second*5))
 	c.Request.Header.Set("Cookie", "token="+token)
 }
 
@@ -250,7 +250,7 @@ func prepareContext(c *gin.Context) {
 	c.Request.PostForm = url.Values{}
 	c.Request.PostForm.Set("title", "title")
 	c.Request.PostForm.Set("content", "content")
-	token := config.GenerateToken("testuser", time.Duration(time.Second * 5))
+	token := config.GenerateToken("testuser", time.Duration(time.Second*5))
 	c.Request.Header.Set("Cookie", "token="+token)
 }
 

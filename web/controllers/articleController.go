@@ -1,10 +1,10 @@
 package controllers
 
 import (
-	"blog/config"
-	"blog/services"
-	"blog/web/bundlers"
 	"github.com/gin-gonic/gin"
+	"github.com/maoltr/blog/config"
+	"github.com/maoltr/blog/services"
+	"github.com/maoltr/blog/web/bundlers"
 	"net/http"
 	"strings"
 )
@@ -51,8 +51,8 @@ func GetArticle(c *gin.Context) {
 	}
 
 	bundlers.RenderErr(c, gin.H{
-		"title":        "Article",
-		"text":         "Not found",
+		"title": "Article",
+		"text":  "Not found",
 	}, http.StatusNotFound)
 
 }
@@ -70,8 +70,8 @@ func DeleteArticle(c *gin.Context) {
 	}
 
 	bundlers.RenderErr(c, gin.H{
-		"title":        "Deleting",
-		"text":         "Can't delete article, try again later",
+		"title": "Deleting",
+		"text":  "Can't delete article, try again later",
 	}, http.StatusBadRequest)
 }
 
@@ -82,8 +82,8 @@ func ManageArticles(c *gin.Context) {
 
 	if len(articles) <= 0 {
 		bundlers.RenderErr(c, gin.H{
-			"title":        "You haven't articles",
-			"text":         "You haven't articles, create them:)",
+			"title": "You haven't articles",
+			"text":  "You haven't articles, create them:)",
 		}, http.StatusNotFound)
 		return
 	}
@@ -102,13 +102,13 @@ func GetUpdateArticle(c *gin.Context) {
 	if article.Id == 0 {
 		bundlers.RenderErr(c, gin.H{
 			"title": "Not found article",
-			"text": "Can't found this article",
+			"text":  "Can't found this article",
 		}, http.StatusNotFound)
 		return
 	}
 
 	bundlers.Render(c, gin.H{
-		"title": "Article",
+		"title":   "Article",
 		"payload": article,
 	}, "update-article.html")
 }
@@ -128,7 +128,7 @@ func PostUpdateArticle(c *gin.Context) {
 	}
 	bundlers.RenderErr(c, gin.H{
 		"title": "Can't update article",
-		"text": err,
+		"text":  err,
 	}, http.StatusBadRequest)
 
 	return
@@ -137,8 +137,8 @@ func PostUpdateArticle(c *gin.Context) {
 
 func notAuthorized(c *gin.Context) {
 	bundlers.RenderErr(c, gin.H{
-		"title":        "Not authorized",
-		"text":         "You don't authorized",
+		"title": "Not authorized",
+		"text":  "You don't authorized",
 	}, http.StatusUnauthorized)
 }
 

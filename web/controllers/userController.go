@@ -1,10 +1,10 @@
 package controllers
 
 import (
-	"blog/config"
-	"blog/services"
-	"blog/web/bundlers"
 	"github.com/gin-gonic/gin"
+	"github.com/maoltr/blog/config"
+	"github.com/maoltr/blog/services"
+	"github.com/maoltr/blog/web/bundlers"
 	"net/http"
 	"time"
 )
@@ -33,8 +33,8 @@ func Login(c *gin.Context) {
 	}
 
 	bundlers.RenderErr(c, gin.H{
-		"title":   "Login Failed",
-		"text": err.Error(),
+		"title": "Login Failed",
+		"text":  err.Error(),
 	}, http.StatusBadRequest)
 }
 
@@ -67,7 +67,7 @@ func Register(c *gin.Context) {
 	}
 
 	bundlers.RenderErr(c, gin.H{
-		"title":  "Registration Failed",
-		"text": err.Error(),
+		"title": "Registration Failed",
+		"text":  err.Error(),
 	}, http.StatusBadRequest)
 }

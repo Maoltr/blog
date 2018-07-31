@@ -1,8 +1,8 @@
 package services
 
 import (
-	"testing"
 	"fmt"
+	"testing"
 )
 
 func TestServiceArticle(t *testing.T) {

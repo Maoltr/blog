@@ -1,12 +1,12 @@
 package controllers
 
 import (
-	"testing"
-	"net/http/httptest"
 	"github.com/gin-gonic/gin"
+	"github.com/maoltr/blog/services"
 	"net/http"
+	"net/http/httptest"
 	"net/url"
-	"blog/services"
+	"testing"
 )
 
 func TestShowLoginPage(t *testing.T) {

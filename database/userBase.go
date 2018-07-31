@@ -1,13 +1,14 @@
 package database
 
-import "blog/model"
+import (
+	"github.com/maoltr/blog/model"
+)
 
 func SaveUser(username, password string) bool {
 	user := model.NewUser(username, password)
 
 	if IsUsernameAvailable(username) {
 		db := ArticleDatabase()
-		defer Close(db)
 		db.Save(&user)
 
 		return true
@@ -20,7 +21,6 @@ func IsUsernameAvailable(username string) bool {
 	var user model.User
 
 	db := ArticleDatabase()
-	defer Close(db)
 	db.First(&user, "username = ?", username)
 
 	if user.ID != 0 {
@@ -34,7 +34,6 @@ func FindUser(username string) *model.User {
 	var user model.User
 
 	db := ArticleDatabase()
-	defer Close(db)
 	db.Find(&user, "username = ?", username)
 
 	return &user
@@ -44,7 +43,6 @@ func DeleteUser(username string) bool {
 	var user model.User
 
 	db := ArticleDatabase()
-	defer Close(db)
 	db.Find(&user, "username = ?", username)
 
 	if user.ID != 0 {
@@ -59,7 +57,6 @@ func UpdateUser(id, username, password string) *model.User {
 	var user model.User
 
 	db := ArticleDatabase()
-	defer Close(db)
 	db.Find(&user, id)
 
 	if user.ID != 0 {

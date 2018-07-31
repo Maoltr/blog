@@ -1,10 +1,10 @@
 package services
 
 import (
-	"testing"
-	"blog/database"
 	"fmt"
-	"blog/model"
+	"github.com/maoltr/blog/database"
+	"github.com/maoltr/blog/model"
+	"testing"
 )
 
 func TestAddUser(t *testing.T) {

@@ -2,8 +2,8 @@ package controllers
 
 import (
 	"github.com/gin-gonic/gin"
+	"github.com/maoltr/blog/config"
 	"net/http"
-	"blog/config"
 )
 
 func SetUserStatus() gin.HandlerFunc {

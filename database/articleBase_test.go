@@ -1,8 +1,8 @@
 package database
 
 import (
-	"blog/model"
 	"fmt"
+	"github.com/maoltr/blog/model"
 	"testing"
 )
 

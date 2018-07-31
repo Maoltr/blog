@@ -1,14 +1,16 @@
 package web
 
 import (
-	"blog/web/controllers"
 	"github.com/gin-gonic/gin"
+		"github.com/maoltr/blog/web/controllers"
 )
 
 func StartServer() {
 	router := gin.Default()
 
 	router.Use(controllers.SetUserStatus())
+
+	//db := database.ArticleDatabase()
 
 	router.GET("/", controllers.GetAllArticles)
 	router.LoadHTMLGlob("./resources/templates/*.html")

@@ -1,8 +1,8 @@
 package services
 
 import (
-	"blog/database"
-	"blog/model"
+	"github.com/maoltr/blog/database"
+	"github.com/maoltr/blog/model"
 )
 
 func GetAllArticles() []model.TransformedArticle {

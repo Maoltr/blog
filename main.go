@@ -1,6 +1,6 @@
 package main
 
-import "blog/web"
+import "github.com/maoltr/blog/web"
 
 func main() {
 	web.StartServer()

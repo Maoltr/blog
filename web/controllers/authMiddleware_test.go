@@ -1,19 +1,19 @@
 package controllers
 
 import (
-	"testing"
 	"github.com/gin-gonic/gin"
-	"blog/config"
-	"time"
-	"net/http/httptest"
+	"github.com/maoltr/blog/config"
 	"net/http"
+	"net/http/httptest"
+	"testing"
+	"time"
 )
 
 func TestUserStatus(t *testing.T) {
 	c, _ := gin.CreateTestContext(httptest.NewRecorder())
 	c.Request, _ = http.NewRequest("GET", "/get", nil)
 
-	token := config.GenerateToken("joni", time.Duration(time.Second * 2))
+	token := config.GenerateToken("joni", time.Duration(time.Second*2))
 
 	c.Request.Header.Set("Cookie", "token="+token)
 
@@ -22,17 +22,17 @@ func TestUserStatus(t *testing.T) {
 	loggedInInterface, _ := c.Get("is_logged_in")
 	loggedIn := loggedInInterface.(bool)
 
-	if  !loggedIn{
+	if !loggedIn {
 		t.Error("Problem with userStatus")
 	}
 
-	time.Sleep(time.Second*3)
+	time.Sleep(time.Second * 3)
 
 	userStatus(c)
 
 	loggedInInterface, _ = c.Get("is_logged_in")
 	loggedIn = loggedInInterface.(bool)
-	if  loggedIn {
+	if loggedIn {
 		t.Error("Problem with userStatus 2")
 	}
 
