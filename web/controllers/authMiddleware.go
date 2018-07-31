@@ -12,14 +12,6 @@ func SetUserStatus() gin.HandlerFunc {
 	}
 }
 
-func userStatus(c *gin.Context) {
-	if token, err := c.Cookie("token"); err == nil && config.ValidateToken(token) == nil {
-		c.Set("is_logged_in", true)
-	} else {
-		c.Set("is_logged_in", false)
-	}
-}
-
 func EnsureLoggedIn() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		loggedIn(c)
@@ -47,5 +39,13 @@ func noLoggedIn(c *gin.Context) {
 
 	if loggedIn {
 		c.AbortWithStatus(http.StatusUnauthorized)
+	}
+}
+
+func userStatus(c *gin.Context) {
+	if token, err := c.Cookie("token"); err == nil && config.ValidateToken(token) == nil {
+		c.Set("is_logged_in", true)
+	} else {
+		c.Set("is_logged_in", false)
 	}
 }
