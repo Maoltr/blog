@@ -5,5 +5,8 @@
     "password": "test",
     "host": "localhost",
     "port": "3306"
+  },
+  "secretKey": {
+    "key": "95b5288mv5cdtyxb2p8wlc12e"
   }
 }

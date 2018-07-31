@@ -5,11 +5,18 @@ import (
 	"github.com/dgrijalva/jwt-go"
 	"github.com/pkg/errors"
 	"time"
+	"sync"
 )
 
-var mySigningKey = []byte("secret")
+var mySigningKey []byte
+var on sync.Once
+const path = "config/config.json"
 
 func GenerateToken(username string, lifeTime time.Duration) string {
+	on.Do(func() {
+		mySigningKey = []byte(FromFile(path).SecretKey.Key)
+	})
+
 	var token jwt.Token
 
 	claims := jwt.MapClaims{

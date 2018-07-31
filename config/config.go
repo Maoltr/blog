@@ -4,10 +4,15 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
+	"sync"
 )
 
+var conf *Config
+var once sync.Once
+
 type Config struct {
-	DB DB `json:"database"`
+	DB        DB        `json:"database"`
+	SecretKey SecretKey `json:"secretKey"`
 }
 
 type DB struct {
@@ -18,20 +23,25 @@ type DB struct {
 	Password string `json:"password"`
 }
 
+type SecretKey struct {
+	Key string `json:"key"`
+}
+
 func FromFile(path string) *Config {
-	bytes, err := ioutil.ReadFile(path)
+	once.Do(func() {
+		bytes, err := ioutil.ReadFile(path)
 
-	if err != nil {
-		panic("error reading config.json " + path + ": " + err.Error())
-	}
+		if err != nil {
+			panic("error reading config.json " + path + ": " + err.Error())
+		}
 
-	var conf Config
-	if err := json.Unmarshal(bytes, &conf); err != nil {
-		panic("error parsing config.json " + path + ": " + err.Error())
-	}
-	fmt.Println(conf)
+		if err := json.Unmarshal(bytes, &conf); err != nil {
+			panic("error parsing config.json " + path + ": " + err.Error())
+		}
+		fmt.Println(conf)
+	})
 
-	return &conf
+	return conf
 }
 
 func (d *DB) DbConnURL() string {

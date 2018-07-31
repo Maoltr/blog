@@ -3,6 +3,8 @@ package database
 import (
 	"fmt"
 	"testing"
+	"math/rand"
+	"strconv"
 )
 
 func TestSaveAndFindAndDeleteUser(t *testing.T) {
@@ -26,15 +28,16 @@ func TestSaveAndFindAndDeleteUser(t *testing.T) {
 	}
 
 	//Checking that we can't delete nonexist user
-	if DeleteUser("dgsgfdsgdfgdfghdfsgfdsg") {
-		t.Error("Deleted nonexist user")
+	u := strconv.Itoa(rand.Int())
+	if DeleteUser(u) {
+		t.Error("Deleted nonexist user, username: ", u)
 	}
 
 	//Checking that we can't find nonexist user
-	user = FindUser("sgfsgdhdfjgfjsdfsdfsfgf")
+	user = FindUser(u)
 
 	if user.ID != 0 {
-		t.Error("Found nonexist user")
+		t.Error("Found nonexist user, username: ", u)
 	}
 }
 
@@ -49,9 +52,10 @@ func TestIsUsernameAvailable(t *testing.T) {
 		t.Error("This name is busy, but IsUsernameAvailable tell that it's free")
 	}
 
-	//Check that random unpronounceable name is free
-	if !IsUsernameAvailable("fsdhgdjkhfopkhghjgkhgkhgsdfgdfsgdfk") {
-		t.Error("This name is free, but IsUsernameAvailable tell that it's busy")
+	//Check that random name is free
+	u := strconv.Itoa(rand.Int())
+	if !IsUsernameAvailable(u) {
+		t.Error("This name is free, but IsUsernameAvailable tell that it's busy, username: ", u)
 	}
 
 	//Clear base

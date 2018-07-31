@@ -42,4 +42,3 @@ func Close(db *gorm.DB) {
 		panic("Can't close database")
 	}
 }
-
