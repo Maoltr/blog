@@ -2,8 +2,8 @@ package controllers
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/maoltr/blog/config"
 	"github.com/maoltr/blog/services"
+	. "github.com/maoltr/blog/token"
 	"github.com/maoltr/blog/web/bundlers"
 	"net/http"
 	"time"
@@ -22,7 +22,7 @@ func Login(c *gin.Context) {
 	err := services.ValidateUser(username, password)
 
 	if err == nil {
-		c.SetCookie("token", config.GenerateToken(username, time.Duration(time.Minute*20)), 3600, "", "", false, true)
+		c.SetCookie("token", GenerateToken(username, time.Duration(time.Minute*20)), 3600, "", "", false, true)
 		c.Set("is_logged_in", true)
 
 		bundlers.Render(c, gin.H{
@@ -57,7 +57,7 @@ func Register(c *gin.Context) {
 	err := services.AddUser(username, password)
 
 	if err == nil {
-		c.SetCookie("token", config.GenerateToken(username, time.Duration(time.Minute*20)), 3600, "", "", false, true)
+		c.SetCookie("token", GenerateToken(username, time.Duration(time.Minute*20)), 3600, "", "", false, true)
 		c.Set("is_logged_in", true)
 
 		bundlers.Render(c, gin.H{

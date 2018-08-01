@@ -2,7 +2,7 @@ package controllers
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/maoltr/blog/config"
+	. "github.com/maoltr/blog/token"
 	"github.com/maoltr/blog/services"
 	"github.com/maoltr/blog/web/bundlers"
 	"net/http"
@@ -150,7 +150,7 @@ func getUsername(c *gin.Context) string {
 		return ""
 	}
 
-	username, err := config.GetUsername(token)
+	username, err := GetUsername(token)
 
 	if err != nil {
 		notAuthorized(c)

@@ -2,7 +2,7 @@ package controllers
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/maoltr/blog/config"
+	. "github.com/maoltr/blog/token"
 	"net/http"
 )
 
@@ -13,7 +13,7 @@ func SetUserStatus() gin.HandlerFunc {
 }
 
 func userStatus(c *gin.Context) {
-	if token, err := c.Cookie("token"); err == nil && config.ValidateToken(token) == nil {
+	if token, err := c.Cookie("token"); err == nil && ValidateToken(token) == nil {
 		c.Set("is_logged_in", true)
 	} else {
 		c.Set("is_logged_in", false)

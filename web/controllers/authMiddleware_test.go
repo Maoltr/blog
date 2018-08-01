@@ -2,7 +2,7 @@ package controllers
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/maoltr/blog/config"
+	. "github.com/maoltr/blog/token"
 	"net/http"
 	"net/http/httptest"
 	"testing"
@@ -13,7 +13,7 @@ func TestUserStatus(t *testing.T) {
 	c, _ := gin.CreateTestContext(httptest.NewRecorder())
 	c.Request, _ = http.NewRequest("GET", "/get", nil)
 
-	token := config.GenerateToken("joni", time.Duration(time.Second*2))
+	token := GenerateToken("joni", time.Duration(time.Second*2))
 
 	c.Request.Header.Set("Cookie", "token="+token)
 

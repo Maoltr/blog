@@ -2,9 +2,9 @@ package database
 
 import (
 	"fmt"
-	"testing"
 	"math/rand"
 	"strconv"
+	"testing"
 )
 
 func TestSaveAndFindAndDeleteUser(t *testing.T) {

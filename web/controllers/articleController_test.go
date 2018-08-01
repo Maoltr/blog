@@ -3,8 +3,8 @@ package controllers
 import (
 	"fmt"
 	"github.com/gin-gonic/gin"
-	"github.com/maoltr/blog/config"
 	"github.com/maoltr/blog/services"
+	. "github.com/maoltr/blog/token"
 	"net/http"
 	"net/http/httptest"
 	"net/url"
@@ -180,7 +180,7 @@ func TestGetUpdateArticle(t *testing.T) {
 	c.Params = params
 	c.Params[0] = gin.Param{Key: "id", Value: id}
 	c.Request.Header.Set("Accept", "application/json")
-	token := config.GenerateToken(username, time.Duration(time.Second*3))
+	token := GenerateToken(username, time.Duration(time.Second*3))
 	c.Request.Header.Set("Cookie", "token="+token)
 
 	GetUpdateArticle(c)
@@ -203,7 +203,7 @@ func TestPostUpdateArticle(t *testing.T) {
 	c.Request, _ = http.NewRequest("POST", "/article/update/", nil)
 	prepareContextForUpdate(c)
 	c.Params[0] = gin.Param{Key: "id", Value: id}
-	token := config.GenerateToken(username, time.Duration(time.Second*3))
+	token := GenerateToken(username, time.Duration(time.Second*3))
 	c.Request.Header.Set("Cookie", "token="+token)
 
 	PostUpdateArticle(c)
@@ -215,7 +215,7 @@ func TestPostUpdateArticle(t *testing.T) {
 	c, _ = gin.CreateTestContext(w)
 	c.Request, _ = http.NewRequest("POST", "/article/update/", nil)
 	prepareContextForUpdate(c)
-	token = config.GenerateToken("1234567", time.Duration(time.Second*3))
+	token = GenerateToken("1234567", time.Duration(time.Second*3))
 	c.Request.Header.Set("Cookie", "token="+token)
 
 	PostUpdateArticle(c)
@@ -238,7 +238,7 @@ func prepareContextForManage(c *gin.Context) {
 	c.Request, _ = http.NewRequest("GET", "/article/manage/", nil)
 	c.Set("is_logged_in", true)
 	c.Request.Header.Set("Accept", "application/json")
-	token := config.GenerateToken(username, time.Duration(time.Second*5))
+	token := GenerateToken(username, time.Duration(time.Second*5))
 	c.Request.Header.Set("Cookie", "token="+token)
 }
 
@@ -250,7 +250,7 @@ func prepareContext(c *gin.Context) {
 	c.Request.PostForm = url.Values{}
 	c.Request.PostForm.Set("title", "title")
 	c.Request.PostForm.Set("content", "content")
-	token := config.GenerateToken("testuser", time.Duration(time.Second*5))
+	token := GenerateToken("testuser", time.Duration(time.Second*5))
 	c.Request.Header.Set("Cookie", "token="+token)
 }
 

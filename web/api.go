@@ -2,7 +2,7 @@ package web
 
 import (
 	"github.com/gin-gonic/gin"
-		"github.com/maoltr/blog/web/controllers"
+	"github.com/maoltr/blog/web/controllers"
 )
 
 func StartServer() {
