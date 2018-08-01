@@ -363,6 +363,7 @@
       <filePath value="$PROJECT_DIR$/main.go" />
       <package value="blog" />
       <directory value="$PROJECT_DIR$/" />
+      <method v="2" />
     </configuration>
     <configuration name="TestManageArticles in blog/web/controllers" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
       <module name="blog" />
@@ -374,6 +375,7 @@
       <directory value="$PROJECT_DIR$/" />
       <filePath value="$PROJECT_DIR$/" />
       <pattern value="^TestManageArticles$" />
+      <method v="2" />
     </configuration>
     <configuration name="TestPostAndDeleteArticle in blog/web/controllers" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
       <module name="blog" />
@@ -385,6 +387,7 @@
       <directory value="$PROJECT_DIR$/" />
       <filePath value="$PROJECT_DIR$/" />
       <pattern value="^TestPostAndDeleteArticle$" />
+      <method v="2" />
     </configuration>
     <configuration name="TestPostUpdateArticle in blog/web/controllers" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
       <module name="blog" />
@@ -396,6 +399,7 @@
       <directory value="$PROJECT_DIR$/" />
       <filePath value="$PROJECT_DIR$/" />
       <pattern value="^TestPostUpdateArticle$" />
+      <method v="2" />
     </configuration>
     <configuration name="go test blog/services" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
       <module name="blog" />
@@ -406,6 +410,7 @@
       <package value="blog/services" />
       <directory value="$PROJECT_DIR$/" />
       <filePath value="$PROJECT_DIR$/" />
+      <method v="2" />
     </configuration>
     <list>
       <item itemvalue="Go Test.TestPostUpdateArticle in blog/web/controllers" />
